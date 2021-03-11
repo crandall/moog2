@@ -17,7 +17,6 @@
 		E7D0564225F994C4002B0820 /* AudioKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7D0564025F994C4002B0820 /* AudioKit.framework */; };
 		E7D0564325F994C4002B0820 /* AudioKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7D0564125F994C4002B0820 /* AudioKitUI.framework */; };
 		E7D15FB721ED9225000549E9 /* MainMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D15FB621ED9225000549E9 /* MainMenuController.swift */; };
-		E7D15FB921ED9D15000549E9 /* DisplayController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D15FB821ED9D15000549E9 /* DisplayController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,7 +35,6 @@
 		E7D0564025F994C4002B0820 /* AudioKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioKit.framework; path = ../../AudioKit/iOS/AudioKit.framework; sourceTree = "<group>"; };
 		E7D0564125F994C4002B0820 /* AudioKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioKitUI.framework; path = ../../AudioKit/iOS/AudioKitUI.framework; sourceTree = "<group>"; };
 		E7D15FB621ED9225000549E9 /* MainMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuController.swift; sourceTree = "<group>"; };
-		E7D15FB821ED9D15000549E9 /* DisplayController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,7 +80,6 @@
 				C417028A1C11954900AB689C /* Assets.xcassets */,
 				C417028C1C11954900AB689C /* LaunchScreen.storyboard */,
 				E7D15FB621ED9225000549E9 /* MainMenuController.swift */,
-				E7D15FB821ED9D15000549E9 /* DisplayController.swift */,
 				E736ED2225FA894100631425 /* WaveDisplayController.swift */,
 			);
 			path = HelloWorld;
@@ -176,7 +173,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E7D15FB921ED9D15000549E9 /* DisplayController.swift in Sources */,
 				C41702841C11954900AB689C /* AppDelegate.swift in Sources */,
 				E7D15FB721ED9225000549E9 /* MainMenuController.swift in Sources */,
 				E736ED2325FA894100631425 /* WaveDisplayController.swift in Sources */,
