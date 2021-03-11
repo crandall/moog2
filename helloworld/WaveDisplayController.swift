@@ -24,6 +24,7 @@ class WaveDisplayController: UIViewController {
         super.viewWillAppear(animated)
     }
     
+    
     @IBAction func onMenu(){
         print("onMenu")
     }
