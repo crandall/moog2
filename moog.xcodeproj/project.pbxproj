@@ -11,6 +11,7 @@
 		C41702891C11954900AB689C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C41702871C11954900AB689C /* Main.storyboard */; };
 		C417028B1C11954900AB689C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C417028A1C11954900AB689C /* Assets.xcassets */; };
 		C417028E1C11954900AB689C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C417028C1C11954900AB689C /* LaunchScreen.storyboard */; };
+		E736ED2325FA894100631425 /* WaveDisplayController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E736ED2225FA894100631425 /* WaveDisplayController.swift */; };
 		E7765EED24B8D90400CA306E /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7765EEC24B8D90400CA306E /* GameKit.framework */; };
 		E7765EEF24B8D91E00CA306E /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7765EEE24B8D91E00CA306E /* StoreKit.framework */; };
 		E7D0564225F994C4002B0820 /* AudioKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7D0564025F994C4002B0820 /* AudioKit.framework */; };
@@ -27,6 +28,7 @@
 		C417028D1C11954900AB689C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C417028F1C11954900AB689C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C4AC4AE22019BBFF00D04C7F /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		E736ED2225FA894100631425 /* WaveDisplayController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WaveDisplayController.swift; path = helloworld/WaveDisplayController.swift; sourceTree = SOURCE_ROOT; };
 		E7765EEB24B8D8AB00CA306E /* ThereScope.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ThereScope.entitlements; sourceTree = "<group>"; };
 		E7765EEC24B8D90400CA306E /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		E7765EEE24B8D91E00CA306E /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
@@ -81,6 +83,7 @@
 				C417028F1C11954900AB689C /* Info.plist */,
 				E7D15FB621ED9225000549E9 /* MainMenuController.swift */,
 				E7D15FB821ED9D15000549E9 /* DisplayController.swift */,
+				E736ED2225FA894100631425 /* WaveDisplayController.swift */,
 			);
 			path = HelloWorld;
 			sourceTree = "<group>";
@@ -176,6 +179,7 @@
 				E7D15FB921ED9D15000549E9 /* DisplayController.swift in Sources */,
 				C41702841C11954900AB689C /* AppDelegate.swift in Sources */,
 				E7D15FB721ED9225000549E9 /* MainMenuController.swift in Sources */,
+				E736ED2325FA894100631425 /* WaveDisplayController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
