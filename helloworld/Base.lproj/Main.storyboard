@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="1Ey-Jk-y5Y">
+    <device id="ipad10_5" orientation="portrait" layout="fullscreen" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Main Menu Controller-->
+        <scene sceneID="yaJ-rw-EWF">
+            <objects>
+                <viewController storyboardIdentifier="mainMenuController" id="aTp-qt-Cx2" customClass="MainMenuController" customModule="ThereScope" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Bvo-mI-eze"/>
+                        <viewControllerLayoutGuide type="bottom" id="dEy-fS-7d7"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" restorationIdentifier="mainMenuController" id="1Qf-Qc-y9d">
+                        <rect key="frame" x="0.0" y="0.0" width="834" height="1112"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="foundationLogo" translatesAutoresizingMaskIntoConstraints="NO" id="DQE-W4-pkh">
+                                <rect key="frame" x="167" y="313.5" width="300" height="222.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="300" id="xxR-oV-UQ0"/>
+                                </constraints>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="schoolLogo" translatesAutoresizingMaskIntoConstraints="NO" id="mU7-aS-cqK">
+                                <rect key="frame" x="167" y="544" width="300" height="222.5"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f00-X4-twx">
+                                <rect key="frame" x="396" y="1083" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="itj-yo-eMD">
+                                <rect key="frame" x="547" y="536" width="260" height="60"/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="260" id="R2i-Sr-F4Q"/>
+                                    <constraint firstAttribute="height" constant="60" id="ptc-uw-8yZ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="31"/>
+                                <state key="normal" title="ThereScope">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="onWave" destination="aTp-qt-Cx2" eventType="touchUpInside" id="uIm-vD-9BC"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="itj-yo-eMD" firstAttribute="top" secondItem="DQE-W4-pkh" secondAttribute="bottom" id="3zI-pm-9An"/>
+                            <constraint firstItem="DQE-W4-pkh" firstAttribute="height" secondItem="1Qf-Qc-y9d" secondAttribute="height" multiplier="0.2" id="AUX-Fs-BaT"/>
+                            <constraint firstItem="f00-X4-twx" firstAttribute="centerX" secondItem="1Qf-Qc-y9d" secondAttribute="centerX" id="K7a-So-Cur"/>
+                            <constraint firstItem="mU7-aS-cqK" firstAttribute="centerX" secondItem="DQE-W4-pkh" secondAttribute="centerX" id="Nda-FS-Or5"/>
+                            <constraint firstItem="mU7-aS-cqK" firstAttribute="width" secondItem="DQE-W4-pkh" secondAttribute="width" id="PHH-t5-ndh"/>
+                            <constraint firstItem="DQE-W4-pkh" firstAttribute="bottom" secondItem="1Qf-Qc-y9d" secondAttribute="centerY" constant="-20" id="QGg-kz-02u"/>
+                            <constraint firstItem="dEy-fS-7d7" firstAttribute="top" secondItem="f00-X4-twx" secondAttribute="bottom" constant="8" symbolic="YES" id="T7p-ah-qdq"/>
+                            <constraint firstItem="mU7-aS-cqK" firstAttribute="height" secondItem="DQE-W4-pkh" secondAttribute="height" id="aSD-pG-6uf"/>
+                            <constraint firstItem="itj-yo-eMD" firstAttribute="leading" secondItem="DQE-W4-pkh" secondAttribute="trailing" constant="80" id="br4-R6-2mz"/>
+                            <constraint firstItem="DQE-W4-pkh" firstAttribute="centerX" secondItem="1Qf-Qc-y9d" secondAttribute="centerX" constant="-100" id="hpF-HT-2iS"/>
+                            <constraint firstItem="mU7-aS-cqK" firstAttribute="top" secondItem="DQE-W4-pkh" secondAttribute="bottom" constant="8" symbolic="YES" id="qvI-s6-ZDv"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="2Yy-CT-dTr"/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <connections>
+                        <outlet property="buildLabel" destination="f00-X4-twx" id="nct-Yw-bBE"/>
+                        <outlet property="foundationLogoIV" destination="DQE-W4-pkh" id="Nng-Yd-oa1"/>
+                        <outlet property="schoolLogoIV" destination="mU7-aS-cqK" id="EYn-Fd-aWi"/>
+                        <outlet property="waveButton" destination="itj-yo-eMD" id="EUv-kY-Xf4"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hUh-K6-SYU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="361.15107913669067" y="423.56115107913672"/>
+        </scene>
+        <!--Display Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController storyboardIdentifier="displayController" id="BYZ-38-t0r" customClass="DisplayController" customModule="ThereScope" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="834" height="1112"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gain:" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fjm-iq-EiH">
+                                <rect key="frame" x="20" y="8" width="35.5" height="18"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eDc-g7-QF6">
+                                <rect key="frame" x="737" y="37" width="46" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                            </button>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="4" translatesAutoresizingMaskIntoConstraints="NO" id="09A-CS-MUC">
+                                <rect key="frame" x="265" y="1074" width="304" height="31"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="300" id="IAL-9P-uIR"/>
+                                </constraints>
+                                <connections>
+                                    <action selector="onSliderValueChangedWithSender:" destination="BYZ-38-t0r" eventType="valueChanged" id="IZd-En-b6c"/>
+                                </connections>
+                            </slider>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="09A-CS-MUC" secondAttribute="bottom" constant="8" symbolic="YES" id="LWE-Y7-K5Y"/>
+                            <constraint firstItem="09A-CS-MUC" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="QF1-P7-KlN"/>
+                            <constraint firstItem="Fjm-iq-EiH" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" symbolic="YES" id="bWX-Oe-yfg"/>
+                            <constraint firstItem="Fjm-iq-EiH" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" symbolic="YES" id="jyU-as-eeL"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="5Vm-3p-g78"/>
+                    <connections>
+                        <outlet property="gainLabel" destination="Fjm-iq-EiH" id="SYk-zd-VuZ"/>
+                        <outlet property="slider" destination="09A-CS-MUC" id="p3F-Dc-UAc"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1809.3525179856117" y="428.9568345323741"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="VJY-th-qTc">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="1Ey-Jk-y5Y" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="27f-hF-rZ8">
+                        <rect key="frame" x="0.0" y="0.0" width="834" height="50"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="aTp-qt-Cx2" kind="relationship" relationship="rootViewController" id="HNz-xK-qzd"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="X8e-df-82I" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-391.36690647482015" y="423.56115107913672"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="foundationLogo" width="817" height="410"/>
+        <image name="schoolLogo" width="480" height="480"/>
+    </resources>
+</document>
