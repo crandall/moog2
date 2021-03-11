@@ -22,15 +22,15 @@ class WaveDisplayController: UIViewController {
     var mic: AKMicrophone?
     var tracker: AKFrequencyTracker!
     var silence: AKBooster!
-    var trackerTimer : Timer?
+
     
-//    required init?(coder aDecoder: NSCoder) {
-//        super.init(coder: aDecoder)
-//
-//        self.startWithMicrophone()
-//        //        self.setUpPlot()
-//
-//    }
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,22 +38,6 @@ class WaveDisplayController: UIViewController {
         
         gainLabel.font = UIFont.systemFont(ofSize: 20)
     }
-    
-    //    override func viewWillDisappear(_ animated: Bool) {
-    //        super.viewWillAppear(animated)
-    ////        do {
-    ////            try AudioKit.shutdown()
-    ////            AudioKit.output = nil
-    ////            self.mic = nil
-    ////
-    //////            if self.trackerTimer != nil {
-    //////                self.trackerTimer!.invalidate()
-    //////                self.trackerTimer = nil
-    //////            }
-    ////        } catch {
-    ////            print("error shutting down")
-    ////        }
-    //    }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -63,9 +47,15 @@ class WaveDisplayController: UIViewController {
         print("\(f.debugDescription)")
         
         self.setUpPlot()
+        self.startWithMicrophone()
         
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.shutdownAudioKit()
+//        self.timer?.invalidate()
+    }
     
     
     override func viewWillLayoutSubviews() {
@@ -74,7 +64,6 @@ class WaveDisplayController: UIViewController {
         self.view.bringSubviewToFront(self.menuButton)
         self.view.bringSubviewToFront(self.slider)
         self.view.bringSubviewToFront(self.gainLabel)
-        
     }
     
     func setUpPlot(){
@@ -82,7 +71,7 @@ class WaveDisplayController: UIViewController {
             let bounds = self.view.bounds
             if let p = AKNodeOutputPlot(self.mic, frame: bounds) as AKNodeOutputPlot?{
                 self.plot = p
-                //                self.plot!.color = .green
+//                self.plot!.backgroundColor = .green
                 self.plot!.color = UIColor(displayP3Red: 66/255, green: 110/255, blue: 244/255, alpha: 1.0)
                 self.plot!.backgroundColor = .black
                 self.view.addSubview(self.plot!)
@@ -90,70 +79,64 @@ class WaveDisplayController: UIViewController {
         }
     }
     
+    
     func restartAudioKit(){
-        exit(0)
-        //        do {
-        //            try AudioKit.disconnectAllInputs()
-        //            try AudioKit.shutdown()
-        //            AudioKit.output = nil
-        //            self.mic = nil
-        //            self.plot?.removeFromSuperview()
-        //            self.plot = nil
-        //
-        //            // restart:
-        //            self.startWithMicrophone()
-        //            self.setUpPlot()
-        //        } catch {
-        //            print("error shutting down")
-        //        }
+        print("restartAudioKit")
+        return
+        do {
+//            try AudioKit.disconnectAllInputs()
+            try AudioKit.shutdown()
+//            AudioKit.output = nil
+//            self.mic = nil
+        } catch {
+            print("error shutting down")
+        }
+
+        DispatchQueue.main.async {
+            self.plot?.removeFromSuperview()
+            self.plot = nil
+            self.setUpPlot()
+            self.startWithMicrophone()
+        }
+
     }
     
     @IBAction func onBack(){
         
-        print("onBack")
-        return
+        let alertController = UIAlertController(title: "Moog Wave Display", message: nil, preferredStyle: .actionSheet)
         
-        let optionMenu = UIAlertController(title: "Moog Wave Display", message: "Quit app for AudioKit restart?", preferredStyle: .actionSheet)
+//        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        let exitAction = UIAlertAction(title: "Exit", style: .default, handler: { alertAction in
+            self.navigationController?.popViewController(animated: true)
+        })
         
-        let restartAction = UIAlertAction(title: "Quit App", style: .default, handler: { alertAction in
+        let restartAction = UIAlertAction(title: "Restart Audio", style: .default, handler: { alertAction in
             self.restartAudioKit()
         })
         
-        optionMenu.addAction(restartAction)
-        optionMenu.addAction(cancelAction)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: { alertAction in
+            print("cancel")
+        })
+
+        
+//        alertController.addAction(restartAction)
+        alertController.addAction(exitAction)
+        alertController.addAction(cancelAction)
+        
+        if let popoverController = alertController.popoverPresentationController {
+            popoverController.sourceView = self.menuButton
+            let yPopover = self.menuButton.frame.maxY + self.menuButton.frame.height
+            popoverController.sourceRect = CGRect(x: self.menuButton.bounds.minX, y:yPopover, width: 0, height: 0)
+            popoverController.permittedArrowDirections = []
+        }
+
         
         DispatchQueue.main.async {
-            self.present(optionMenu, animated: true, completion: nil)
+            self.present(alertController, animated: true, completion: nil)
         }
     }
     
-    //    @IBAction func onBack1(_ sender: UIButton) {
-    //        let alertController = UIAlertController(title: nil, message: "Alert message.", preferredStyle: .actionSheet)
-    //
-    //        let defaultAction = UIAlertAction(title: "Default", style: .default, handler: { (alert: UIAlertAction!) -> Void in
-    //            //  Do some action here.
-    //        })
-    //
-    //        let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: { (alert: UIAlertAction!) -> Void in
-    //            //  Do some destructive action here.
-    //        })
-    //
-    //        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: { (alert: UIAlertAction!) -> Void in
-    //            //  Do something here upon cancellation.
-    //        })
-    //
-    //        alertController.addAction(defaultAction)
-    //        alertController.addAction(deleteAction)
-    //        alertController.addAction(cancelAction)
-    //
-    //        if let popoverController = alertController.popoverPresentationController {
-    //            popoverController.barButtonItem = sender as? UIBarButtonItem
-    //        }
-    //
-    //        self.present(alertController, animated: true, completion: nil)
-    //    }
     
     @IBAction func onSliderValueChanged(sender:UISlider){
         DispatchQueue.main.async {
@@ -162,7 +145,14 @@ class WaveDisplayController: UIViewController {
         }
     }
     
-    
+    func shutdownAudioKit(){
+        do {
+            try AudioKit.shutdown()
+        } catch {
+            print("error shutting down")
+        }
+    }
+
     func startWithMicrophone(){
         AKSettings.audioInputEnabled = true
         mic = AKMicrophone()
@@ -176,7 +166,6 @@ class WaveDisplayController: UIViewController {
                              repeats: true)
         
         
-        //        AudioKit.output = mic
         AudioKit.output = silence
         do {
             try AudioKit.start()

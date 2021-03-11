@@ -90,10 +90,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="834" height="1112"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qS9-Wr-r7f">
-                                <rect key="frame" x="740" y="8" width="74" height="48"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                <state key="normal" title="Menu"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qS9-Wr-r7f">
+                                <rect key="frame" x="778" y="8" width="36" height="36"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <state key="normal" image="hamburger"/>
                                 <connections>
                                     <action selector="onBack" destination="UKj-uZ-FeR" eventType="touchUpInside" id="ILu-hl-YP8"/>
                                 </connections>
@@ -116,7 +116,6 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="qS9-Wr-r7f" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="EKZ-ps-Xrz" secondAttribute="trailing" constant="8" symbolic="YES" id="6Jl-Ga-RHP"/>
                             <constraint firstItem="EKZ-ps-Xrz" firstAttribute="top" secondItem="IDY-XH-R6U" secondAttribute="bottom" constant="8" symbolic="YES" id="8Ty-bS-gPy"/>
                             <constraint firstAttribute="trailing" secondItem="qS9-Wr-r7f" secondAttribute="trailing" constant="20" symbolic="YES" id="Dny-OP-GSe"/>
                             <constraint firstItem="qS9-Wr-r7f" firstAttribute="top" secondItem="IDY-XH-R6U" secondAttribute="bottom" constant="8" symbolic="YES" id="GHg-oU-YPO"/>
@@ -207,6 +206,7 @@
     </scenes>
     <resources>
         <image name="foundationLogo" width="817" height="410"/>
+        <image name="hamburger" width="36" height="36"/>
         <image name="schoolLogo" width="480" height="480"/>
     </resources>
 </document>

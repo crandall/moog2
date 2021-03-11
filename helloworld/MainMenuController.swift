@@ -55,10 +55,11 @@ class MainMenuController: UIViewController {
 //        print("yoMama")
 //    }
     
-    @IBAction func onWave(){
-//        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "displayController")
-//        self.navigationController?.pushViewController(vc, animated: true)
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
 
+    @IBAction func onWave(){
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "waveDisplayController")
         self.navigationController?.pushViewController(vc, animated: true)
     }
