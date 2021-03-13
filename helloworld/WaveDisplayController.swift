@@ -175,6 +175,89 @@ class WaveDisplayController: UIViewController {
         
     }
     
+    func startWithWavFile(){
+        
+        var playYoda = NSURL(fileURLWithPath: Bundle.main.path(forResource: "sine", ofType: "wav")!)
+        do {
+            let file = try AKAudioFile(forReading: playYoda as URL)
+            if let player = AKPlayer(audioFile: file) as AKPlayer?{
+                player.isLooping = true
+                AKSettings.audioInputEnabled = true
+                tracker = AKFrequencyTracker(player)
+                //            AudioKit.output = tracker
+                let silence = AKBooster(tracker, gain: 1.0)
+                //                AudioKit.output = tracker
+                AudioKit.output = silence
+                
+                mic = AKMicrophone()
+                tracker = AKFrequencyTracker(mic)
+                
+                Timer.scheduledTimer(timeInterval: 0.1,
+                                     target: self,
+                                     selector: #selector(self.updateUI),
+                                     userInfo: nil,
+                                     repeats: true)
+                
+                
+                do {
+                    try AudioKit.start()
+                    player.play()
+                } catch {
+                    AKLog("AudioKit did not start!")
+                }
+                
+            }
+            print("got it")
+        } catch {
+            print("yomama")
+        }
+        
+        print("yo")
+        return
+        
+        //        AKSettings.audioInputEnabled = true
+        //        mic = AKMicrophone()
+        //        tracker = AKFrequencyTracker(mic)
+        //        silence = AKBooster(tracker, gain: 0)
+        //        let loud = AKBooster(tracker, gain: 1.0)
+        //        Timer.scheduledTimer(timeInterval: 0.1,
+        //                             target: self,
+        //                             selector: #selector(self.updateUI),
+        //                             userInfo: nil,
+        //                             repeats: true)
+        //
+        //
+        //        AudioKit.output = silence
+        //        do {
+        //            try AudioKit.start()
+        //        } catch {
+        //            AKLog("AudioKit did not start!")
+        //        }
+        
+        
+        
+        //        AKSettings.audioInputEnabled = true
+        //        mic = AKMicrophone()
+        //
+        //        tracker = AKFrequencyTracker(mic)
+        //        silence = AKBooster(tracker, gain: 0)
+        //        Timer.scheduledTimer(timeInterval: 0.1,
+        //                             target: self,
+        //                             selector: #selector(self.updateUI),
+        //                             userInfo: nil,
+        //                             repeats: true)
+        //
+        //
+        //        AudioKit.output = silence
+        //        do {
+        //            try AudioKit.start()
+        //        } catch {
+        //            AKLog("AudioKit did not start!")
+        //        }
+        
+    }
+
+    
     func updateDataLabels(){
         let value = self.slider.value
         
