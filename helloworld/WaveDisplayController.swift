@@ -22,6 +22,8 @@ class WaveDisplayController: UIViewController {
     var mic: AKMicrophone?
     var tracker: AKFrequencyTracker!
     var silence: AKBooster!
+    
+    var timer : Timer?
 
     
     required init?(coder aDecoder: NSCoder) {
