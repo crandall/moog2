@@ -17,7 +17,7 @@ var globalTracker: AKFrequencyTracker?
 var globalSilence: AKBooster?
 
 @objc protocol WaveManagerDelegate {
-    @objc func onTimer()
+    @objc optional func onTimer()
 }
 
 class WaveManager: NSObject {
@@ -27,13 +27,6 @@ class WaveManager: NSObject {
     weak var delegate : WaveManagerDelegate?
     weak var controller : WaveDisplayController?
 
-//    var plot : AKNodeOutputPlot?
-//    var mic: AKMicrophone?
-//    var tracker: AKFrequencyTracker?
-//    var silence: AKBooster?
-    var timer : Timer?
-
-    
     private override init() {
         super.init()
         self.startWithMic()
@@ -48,52 +41,11 @@ class WaveManager: NSObject {
         AudioKit.output = globalSilence
 
         
-//        timer = Timer.scheduledTimer(timeInterval: 0.1,
-//                                     target: self,
-//                                     selector: #selector(self.onTimer),
-//                                     userInfo: nil,
-//                                     repeats: true)
-        
         do {
             try AudioKit.start()
         } catch {
             AKLog("AudioKit did not start!")
         }
     }
-    
-    func setUpPlot(vc:UIViewController){
-//        let bounds = vc.view.bounds
-////        let bounds = CGRect(x: 10, y: 10, width: 600, height: 400)
-//        if let p = AKNodeOutputPlot(self.mic, frame: bounds) as AKNodeOutputPlot?{
-//            self.plot = p
-//            
-//            // new
-//            self.plot!.plotType = .buffer  //.rolling
-//            self.plot!.shouldFill = false
-//            self.plot!.shouldMirror = false
-//            
-//            
-//            
-//            //                self.plot!.backgroundColor = .green
-//            self.plot!.color = UIColor(displayP3Red: 66/255, green: 110/255, blue: 244/255, alpha: 1.0)
-//            self.plot!.backgroundColor = .black
-////            self.view.addSubview(self.plot!)
-//        }
-    }
-
-    
-    @objc func onTimer(){
-
-//        let frequency = self.tracker?.frequency
-//        let amplitude = self.tracker?.amplitude
-//        print("amp:\(amplitude)")
-
-//        guard let frequency = self.tracker?.frequency as Double?,
-//            let amplitude = self.tracker?.amplitude as Double? else { return }
-//        print("\(frequency) :   \(amplitude)")
-
-        delegate?.onTimer()
-    }
-
     
 }
