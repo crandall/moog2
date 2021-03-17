@@ -15,9 +15,9 @@
 		E7765EED24B8D90400CA306E /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7765EEC24B8D90400CA306E /* GameKit.framework */; };
 		E7765EEF24B8D91E00CA306E /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7765EEE24B8D91E00CA306E /* StoreKit.framework */; };
 		E7C214362602AA2E0078B0A3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C214352602AA2E0078B0A3 /* AppDelegate.swift */; };
+		E7C214382602BE710078B0A3 /* MainMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C214372602BE710078B0A3 /* MainMenuController.swift */; };
 		E7D0564225F994C4002B0820 /* AudioKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7D0564025F994C4002B0820 /* AudioKit.framework */; };
 		E7D0564325F994C4002B0820 /* AudioKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7D0564125F994C4002B0820 /* AudioKitUI.framework */; };
-		E7D15FB721ED9225000549E9 /* MainMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D15FB621ED9225000549E9 /* MainMenuController.swift */; };
 		E7F98D2125FDE9A100A3C289 /* TODO in Resources */ = {isa = PBXBuildFile; fileRef = E7F98D2025FDE9A100A3C289 /* TODO */; };
 /* End PBXBuildFile section */
 
@@ -33,11 +33,11 @@
 		E7765EEC24B8D90400CA306E /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		E7765EEE24B8D91E00CA306E /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		E7C214352602AA2E0078B0A3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = HelloWorld/AppDelegate.swift; sourceTree = SOURCE_ROOT; };
+		E7C214372602BE710078B0A3 /* MainMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MainMenuController.swift; path = helloworld/MainMenuController.swift; sourceTree = SOURCE_ROOT; };
 		E7CA8B6125FAAFA800C9C5D8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = Info.plist; path = helloworld/Info.plist; sourceTree = SOURCE_ROOT; };
 		E7D0563E25F994A4002B0820 /* AudioKit */ = {isa = PBXFileReference; lastKnownFileType = folder; name = AudioKit; path = ../../AudioKit; sourceTree = "<group>"; };
 		E7D0564025F994C4002B0820 /* AudioKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioKit.framework; path = ../../AudioKit/iOS/AudioKit.framework; sourceTree = "<group>"; };
 		E7D0564125F994C4002B0820 /* AudioKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioKitUI.framework; path = ../../AudioKit/iOS/AudioKitUI.framework; sourceTree = "<group>"; };
-		E7D15FB621ED9225000549E9 /* MainMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuController.swift; sourceTree = "<group>"; };
 		E7F98D2025FDE9A100A3C289 /* TODO */ = {isa = PBXFileReference; lastKnownFileType = text; path = TODO; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -84,9 +84,9 @@
 				C41702871C11954900AB689C /* Main.storyboard */,
 				C417028A1C11954900AB689C /* Assets.xcassets */,
 				C417028C1C11954900AB689C /* LaunchScreen.storyboard */,
-				E7D15FB621ED9225000549E9 /* MainMenuController.swift */,
 				E736ED2225FA894100631425 /* WaveDisplayController.swift */,
 				E71D79B226026264007BA97B /* WaveManager.swift */,
+				E7C214372602BE710078B0A3 /* MainMenuController.swift */,
 			);
 			path = HelloWorld;
 			sourceTree = "<group>";
@@ -181,8 +181,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				E7C214362602AA2E0078B0A3 /* AppDelegate.swift in Sources */,
+				E7C214382602BE710078B0A3 /* MainMenuController.swift in Sources */,
 				E71D79B326026264007BA97B /* WaveManager.swift in Sources */,
-				E7D15FB721ED9225000549E9 /* MainMenuController.swift in Sources */,
 				E736ED2325FA894100631425 /* WaveDisplayController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
