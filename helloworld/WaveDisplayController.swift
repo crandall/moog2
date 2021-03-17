@@ -9,7 +9,7 @@
 import AudioKit
 import AudioKitUI
 
-class WaveDisplayController: UIViewController {
+class WaveDisplayController: UIViewController, WaveManagerDelegate {
     
 //    @IBOutlet weak var plotTopLC : NSLayoutConstraint!
 //    @IBOutlet weak var plotWidthLC : NSLayoutConstraint!
@@ -26,9 +26,9 @@ class WaveDisplayController: UIViewController {
     var timer : Timer?
 
     
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
+//    required init?(coder aDecoder: NSCoder) {
+//        super.init(coder: aDecoder)
+//    }
     
     override var prefersStatusBarHidden: Bool {
         return true
@@ -39,6 +39,7 @@ class WaveDisplayController: UIViewController {
         self.navigationController?.setNavigationBarHidden(true, animated: false)
         
         gainLabel.font = UIFont.systemFont(ofSize: 20)
+//        let _ = WaveManager.init(del: self, vc: self)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -48,14 +49,44 @@ class WaveDisplayController: UIViewController {
         let f = self.view.frame
         print("\(f.debugDescription)")
         
+        self.mic = AKMicrophone()
         self.setUpPlot()
-        self.startWithMicrophone()
+        WaveManager.sharedInstance.delegate = self
+        
+//        self.setUpPlot()
+//        self.startWithMicrophone()
+
+        
+//        AKSettings.audioInputEnabled = true
+//        mic = AKMicrophone()
+//        tracker = AKFrequencyTracker(mic)
+//        silence = AKBooster(tracker, gain: 0)
+//
+//        AudioKit.output = silence
+//        do {
+//            try AudioKit.start()
+//        } catch {
+//            AKLog("AudioKit did not start!")
+//        }
+//        setUpPlot()
+//        timer = Timer.scheduledTimer(timeInterval: 0.1,
+//                             target: self,
+//                             selector: #selector(ViewController.updateUI),
+//                             userInfo: nil,
+//                             repeats: true)
+
         
     }
+
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+    }
+    
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.shutdownAudioKit()
+//        self.shutdownAudioKit()
 //        self.timer?.invalidate()
     }
     
@@ -68,11 +99,39 @@ class WaveDisplayController: UIViewController {
         self.view.bringSubviewToFront(self.gainLabel)
     }
     
+    func setUpPlotx(tempPlot:AKNodeOutputPlot?){
+        guard let plot = tempPlot as AKNodeOutputPlot? else {
+            print("nil plot")
+            return
+        }
+
+        plot.plotType = .buffer  //.rolling
+        plot.shouldFill = false
+        plot.shouldMirror = false
+        //                self.plot!.backgroundColor = .green
+        plot.color = UIColor(displayP3Red: 66/255, green: 110/255, blue: 244/255, alpha: 1.0)
+        plot.backgroundColor = .black
+
+        self.view.addSubview(plot)
+    }
+    
     func setUpPlot(){
         DispatchQueue.main.async {
             let bounds = self.view.bounds
+//            let mic : AKMicrophone?
+//            if let managerMic = WaveManager.sharedInstance.mic as AKMicrophone?{
+//                self.mic = managerMic
+//            }
             if let p = AKNodeOutputPlot(self.mic, frame: bounds) as AKNodeOutputPlot?{
                 self.plot = p
+                
+                // new
+                self.plot!.plotType = .buffer  //.rolling
+                self.plot!.shouldFill = false
+                self.plot!.shouldMirror = false
+
+                
+                
 //                self.plot!.backgroundColor = .green
                 self.plot!.color = UIColor(displayP3Red: 66/255, green: 110/255, blue: 244/255, alpha: 1.0)
                 self.plot!.backgroundColor = .black
@@ -97,35 +156,41 @@ class WaveDisplayController: UIViewController {
         DispatchQueue.main.async {
             self.plot?.removeFromSuperview()
             self.plot = nil
-            self.setUpPlot()
+//            self.setUpPlot()
             self.startWithMicrophone()
         }
 
     }
     
     @IBAction func onBack(){
-        
+
         let alertController = UIAlertController(title: "Moog Wave Display", message: nil, preferredStyle: .actionSheet)
-        
+
 //        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-        
+
         let exitAction = UIAlertAction(title: "Exit", style: .default, handler: { alertAction in
             self.navigationController?.popViewController(animated: true)
         })
-        
+
         let restartAction = UIAlertAction(title: "Restart Audio", style: .default, handler: { alertAction in
-            self.restartAudioKit()
+//            self.navigationController?.popViewController(animated: true)
+//            self.restartAudioKit()
+            self.shutDown(completion: {
+                DispatchQueue.main.async {
+                    self.navigationController?.popViewController(animated: true)
+                }
+            })
         })
-        
+
         let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: { alertAction in
             print("cancel")
         })
 
-        
-//        alertController.addAction(restartAction)
+
+        alertController.addAction(restartAction)
         alertController.addAction(exitAction)
         alertController.addAction(cancelAction)
-        
+
         if let popoverController = alertController.popoverPresentationController {
             popoverController.sourceView = self.menuButton
             let yPopover = self.menuButton.frame.maxY + self.menuButton.frame.height
@@ -133,7 +198,7 @@ class WaveDisplayController: UIViewController {
             popoverController.permittedArrowDirections = []
         }
 
-        
+
         DispatchQueue.main.async {
             self.present(alertController, animated: true, completion: nil)
         }
@@ -148,23 +213,71 @@ class WaveDisplayController: UIViewController {
     }
     
     func shutdownAudioKit(){
-        do {
-            try AudioKit.shutdown()
-        } catch {
-            print("error shutting down")
+        let dispatchQueue = DispatchQueue(label: "QueueIdentification", qos: .background)
+        dispatchQueue.async{
+            do {
+                self.shutDownTimer()
+                self.tracker.stop()
+                try AudioKit.shutdown()
+                //            self.shutDownTimer()
+            } catch {
+                print("error shutting down")
+            }
+        }
+//        DispatchQueue.main.async {
+//        }
+    }
+    
+    func shutDown(completion: @escaping () -> ()){
+        let queueSystemPassages = DispatchQueue(label: "queueSystemPassages")
+        let groupSystemPassages = DispatchGroup()
+        
+        groupSystemPassages.enter()
+        queueSystemPassages.sync {
+
+            do {
+                self.shutDownTimer()
+                self.plot?.pause()
+                self.tracker.stop()
+                self.mic?.stop()
+                try AudioKit.shutdown()
+                groupSystemPassages.leave()
+                //            self.shutDownTimer()
+            } catch {
+                groupSystemPassages.leave()
+                print("error shutting down")
+            }
+        }
+        
+        groupSystemPassages.notify(queue: queueSystemPassages) {
+            print("groupSystemPassages.notify")
+            completion()
+//            CloudManager.loadUserPassages()
         }
     }
+    
+    func shutDownTimer(){
+        if timer != nil {
+            timer?.invalidate()
+            timer = nil
+        }
+    }
+
 
     func startWithMicrophone(){
         AKSettings.audioInputEnabled = true
         mic = AKMicrophone()
-        
         tracker = AKFrequencyTracker(mic)
         silence = AKBooster(tracker, gain: 0)
-        Timer.scheduledTimer(timeInterval: 0.1,
+
+
+        let number = Int.random(in: 0..<10)
+
+
+        timer = Timer.scheduledTimer(timeInterval: 0.1,
                              target: self,
                              selector: #selector(self.updateUI),
-                             userInfo: nil,
+                             userInfo: ["data": "\(number)"],
                              repeats: true)
         
         
@@ -176,6 +289,7 @@ class WaveDisplayController: UIViewController {
         }
         
     }
+    
     
     func startWithWavFile(){
         
@@ -193,6 +307,8 @@ class WaveDisplayController: UIViewController {
                 
                 mic = AKMicrophone()
                 tracker = AKFrequencyTracker(mic)
+                
+
                 
                 Timer.scheduledTimer(timeInterval: 0.1,
                                      target: self,
@@ -278,14 +394,25 @@ class WaveDisplayController: UIViewController {
         
     }
     
+    @objc func onTimer(){
+        self.updateUI()
+    }
+    
     var currAmplitudeString : String?
     var currFrequencyString : String?
     var currGainString : String?
     @objc func updateUI() {
-        currFrequencyString = String(format: "%0.02f", tracker.frequency)
-        currAmplitudeString = String(format: "%0.02f", tracker.amplitude)
-        self.updateDataLabels()
-        
+        print("updateUI")
+
+        if let gTracker = WaveManager.sharedInstance.tracker as AKFrequencyTracker?{
+            let shit = gTracker.frequency
+            let shit1 = gTracker.amplitude
+            print("\(shit)")
+            currFrequencyString = String(format: "%0.02f", gTracker.frequency)
+            currAmplitudeString = String(format: "%0.02f", gTracker.amplitude)
+            self.updateDataLabels()
+        }
+
         //        if tracker.amplitude > 0.1 {
         //            print("tracker:\(tracker.amplitude)")
         ////            frequencyLabel.text = String(format: "%0.1f", tracker.frequency)

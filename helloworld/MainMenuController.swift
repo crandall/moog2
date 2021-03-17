@@ -62,8 +62,17 @@ class MainMenuController: UIViewController {
     @IBAction func onWave(){
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "waveDisplayController")
         self.navigationController?.pushViewController(vc, animated: true)
+
+//        let vc = UIStoryboard(name: "Mic", bundle: nil).instantiateViewController(withIdentifier: "micAnalysis")
+//        self.navigationController?.pushViewController(vc, animated: true)
     }
-    
+
+    @IBAction func onMicAnalysis(){
+        let vc = UIStoryboard(name: "Mic", bundle: nil).instantiateViewController(withIdentifier: "micAnalysis")
+        self.navigationController?.pushViewController(vc, animated: true)
+        
+    }
+
 
 }
 
