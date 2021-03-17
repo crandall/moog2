@@ -58,6 +58,10 @@ class MainMenuController: UIViewController {
     override var prefersStatusBarHidden: Bool {
         return true
     }
+    
+    @IBAction func onTestButton(){
+        print("onTestButton")
+    }
 
     @IBAction func onWave(){
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "waveDisplayController")
