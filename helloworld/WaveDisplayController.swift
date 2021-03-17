@@ -14,9 +14,14 @@ class WaveDisplayController: UIViewController, WaveManagerDelegate {
     @IBOutlet weak var menuButton : UIButton!
     @IBOutlet weak var slider : UISlider!
     @IBOutlet weak var gainLabel : UILabel!
-    
+    @IBOutlet weak var gainSliderLabel : UILabel!
+
+    @IBOutlet weak var samplingSlider : UISlider!
+    @IBOutlet weak var samplingSliderLabel : UILabel!
+
     var currAmplitudeString : String?
     var currFrequencyString : String?
+    var currSamplingRateString : String?
     var currGainString : String?
     var plot : AKNodeOutputPlot?
     var timer : Timer?
@@ -69,8 +74,11 @@ class WaveDisplayController: UIViewController, WaveManagerDelegate {
         super.viewWillLayoutSubviews()
         
         self.view.bringSubviewToFront(self.menuButton)
-        self.view.bringSubviewToFront(self.slider)
         self.view.bringSubviewToFront(self.gainLabel)
+        self.view.bringSubviewToFront(self.gainSliderLabel)
+        self.view.bringSubviewToFront(self.slider)
+        self.view.bringSubviewToFront(self.samplingSliderLabel)
+        self.view.bringSubviewToFront(self.samplingSlider)
     }
     
     func shutDownTimer(){
@@ -132,6 +140,24 @@ class WaveDisplayController: UIViewController, WaveManagerDelegate {
             self.updateDataLabels()
         }
     }
+    
+    @IBAction func onSampleSliderValueChanged(sender:UISlider){
+        DispatchQueue.main.async {
+            let v = sender.value
+//            self.plot?.gain = sender.value
+            self.updateDataLabels()
+        }
+    }
+    
+    @IBAction func onSampleSliderDragExit(sender:UISlider){
+        DispatchQueue.main.async {
+            let v = sender.value
+            //            self.plot?.gain = sender.value
+            self.updateDataLabels()
+        }
+    }
+
+
 
     func updateDataLabels(){
         let value = self.slider.value
