@@ -12,6 +12,10 @@ import AudioKit
 import AudioKitUI
 
 
+var globalMic: AKMicrophone?
+var globalTracker: AKFrequencyTracker?
+var globalSilence: AKBooster?
+
 @objc protocol WaveManagerDelegate {
     @objc func onTimer()
 }
@@ -24,9 +28,9 @@ class WaveManager: NSObject {
     weak var controller : WaveDisplayController?
 
 //    var plot : AKNodeOutputPlot?
-    var mic: AKMicrophone?
-    var tracker: AKFrequencyTracker!
-    var silence: AKBooster!
+//    var mic: AKMicrophone?
+//    var tracker: AKFrequencyTracker?
+//    var silence: AKBooster?
     var timer : Timer?
 
     
@@ -37,28 +41,24 @@ class WaveManager: NSObject {
     
     func startWithMic(){
         AKSettings.audioInputEnabled = true
-        mic = AKMicrophone()
-        tracker = AKFrequencyTracker(mic)
-        silence = AKBooster(tracker, gain: 0)
         
+        globalMic = AKMicrophone()
+        globalTracker = AKFrequencyTracker(globalMic)
+        globalSilence = AKBooster(globalTracker, gain: 0)
+        AudioKit.output = globalSilence
+
         
-        let number = Int.random(in: 0..<10)
+//        timer = Timer.scheduledTimer(timeInterval: 0.1,
+//                                     target: self,
+//                                     selector: #selector(self.onTimer),
+//                                     userInfo: nil,
+//                                     repeats: true)
         
-        
-        timer = Timer.scheduledTimer(timeInterval: 0.1,
-                                     target: self,
-                                     selector: #selector(self.onTimer),
-                                     userInfo: ["data": "\(number)"],
-                                     repeats: true)
-        
-        
-        AudioKit.output = silence
         do {
             try AudioKit.start()
         } catch {
             AKLog("AudioKit did not start!")
         }
-        print("AK started")
     }
     
     func setUpPlot(vc:UIViewController){
@@ -83,6 +83,15 @@ class WaveManager: NSObject {
 
     
     @objc func onTimer(){
+
+//        let frequency = self.tracker?.frequency
+//        let amplitude = self.tracker?.amplitude
+//        print("amp:\(amplitude)")
+
+//        guard let frequency = self.tracker?.frequency as Double?,
+//            let amplitude = self.tracker?.amplitude as Double? else { return }
+//        print("\(frequency) :   \(amplitude)")
+
         delegate?.onTimer()
     }
 

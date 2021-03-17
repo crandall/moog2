@@ -26,10 +26,6 @@ class WaveDisplayController: UIViewController, WaveManagerDelegate {
     var timer : Timer?
 
     
-//    required init?(coder aDecoder: NSCoder) {
-//        super.init(coder: aDecoder)
-//    }
-    
     override var prefersStatusBarHidden: Bool {
         return true
     }
@@ -39,7 +35,6 @@ class WaveDisplayController: UIViewController, WaveManagerDelegate {
         self.navigationController?.setNavigationBarHidden(true, animated: false)
         
         gainLabel.font = UIFont.systemFont(ofSize: 20)
-//        let _ = WaveManager.init(del: self, vc: self)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -49,9 +44,19 @@ class WaveDisplayController: UIViewController, WaveManagerDelegate {
         let f = self.view.frame
         print("\(f.debugDescription)")
         
-        self.mic = AKMicrophone()
         self.setUpPlot()
         WaveManager.sharedInstance.delegate = self
+
+        if timer != nil {
+            timer!.invalidate()
+            timer = nil
+        }
+        timer = Timer.scheduledTimer(timeInterval: 0.1,
+                                     target: self,
+                                     selector: #selector(self.updateUI),
+                                     userInfo: nil,
+                                     repeats: true)
+
         
 //        self.setUpPlot()
 //        self.startWithMicrophone()
@@ -86,6 +91,7 @@ class WaveDisplayController: UIViewController, WaveManagerDelegate {
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        self.shutDownTimer()
 //        self.shutdownAudioKit()
 //        self.timer?.invalidate()
     }
@@ -118,11 +124,13 @@ class WaveDisplayController: UIViewController, WaveManagerDelegate {
     func setUpPlot(){
         DispatchQueue.main.async {
             let bounds = self.view.bounds
-//            let mic : AKMicrophone?
-//            if let managerMic = WaveManager.sharedInstance.mic as AKMicrophone?{
-//                self.mic = managerMic
-//            }
-            if let p = AKNodeOutputPlot(self.mic, frame: bounds) as AKNodeOutputPlot?{
+
+//            self.mic = AKMicrophone()
+//            self.tracker = AKFrequencyTracker(self.mic)
+//            self.silence = AKBooster(self.tracker, gain: 0)
+//            AudioKit.output = self.silence
+
+            if let p = AKNodeOutputPlot(globalMic, frame: bounds) as AKNodeOutputPlot?{
                 self.plot = p
                 
                 // new
@@ -187,7 +195,7 @@ class WaveDisplayController: UIViewController, WaveManagerDelegate {
         })
 
 
-        alertController.addAction(restartAction)
+//        alertController.addAction(restartAction)
         alertController.addAction(exitAction)
         alertController.addAction(cancelAction)
 
@@ -274,11 +282,11 @@ class WaveDisplayController: UIViewController, WaveManagerDelegate {
         let number = Int.random(in: 0..<10)
 
 
-        timer = Timer.scheduledTimer(timeInterval: 0.1,
-                             target: self,
-                             selector: #selector(self.updateUI),
-                             userInfo: ["data": "\(number)"],
-                             repeats: true)
+//        timer = Timer.scheduledTimer(timeInterval: 0.1,
+//                             target: self,
+//                             selector: #selector(self.updateUI),
+//                             userInfo: ["data": "\(number)"],
+//                             repeats: true)
         
         
         AudioKit.output = silence
@@ -393,7 +401,7 @@ class WaveDisplayController: UIViewController, WaveManagerDelegate {
         
         
     }
-    
+
     @objc func onTimer(){
         self.updateUI()
     }
@@ -402,16 +410,14 @@ class WaveDisplayController: UIViewController, WaveManagerDelegate {
     var currFrequencyString : String?
     var currGainString : String?
     @objc func updateUI() {
-        print("updateUI")
+        currFrequencyString = String(format: "%0.02f", globalTracker?.frequency ?? "no")
+        currAmplitudeString = String(format: "%0.02f", globalTracker?.amplitude ?? "no")
+        
+        print("freq:\(String(describing: currFrequencyString))")
+        print("amp:\(String(describing: currAmplitudeString))")
 
-        if let gTracker = WaveManager.sharedInstance.tracker as AKFrequencyTracker?{
-            let shit = gTracker.frequency
-            let shit1 = gTracker.amplitude
-            print("\(shit)")
-            currFrequencyString = String(format: "%0.02f", gTracker.frequency)
-            currAmplitudeString = String(format: "%0.02f", gTracker.amplitude)
-            self.updateDataLabels()
-        }
+        
+        self.updateDataLabels()
 
         //        if tracker.amplitude > 0.1 {
         //            print("tracker:\(tracker.amplitude)")

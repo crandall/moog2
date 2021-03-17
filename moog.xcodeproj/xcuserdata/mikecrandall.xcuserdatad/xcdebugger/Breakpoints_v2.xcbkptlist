@@ -28,32 +28,32 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "82C08BF7-64C1-46E7-AD7F-1EEAE3299636"
+            uuid = "50B6D341-026A-496B-B219-CD85C0891A2D"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "helloworld/WaveDisplayController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "407"
-            endingLineNumber = "407"
-            landmarkName = "updateUI()"
+            startingLineNumber = "406"
+            endingLineNumber = "406"
+            landmarkName = "onTimer()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "4092DBE1-3CB4-49C5-9060-586026DB4107"
-            shouldBeEnabled = "Yes"
+            uuid = "9CAF7287-5A47-4260-BFB8-3EF63F509F32"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "helloworld/AppDelegate.swift"
+            filePath = "helloworld/WaveDisplayController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "20"
-            endingLineNumber = "20"
-            landmarkName = "application(_:didFinishLaunchingWithOptions:)"
+            startingLineNumber = "126"
+            endingLineNumber = "126"
+            landmarkName = "setUpPlot()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
