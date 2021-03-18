@@ -12,8 +12,9 @@ import AudioKitUI
 class WaveDisplayController: UIViewController, WaveManagerDelegate {
     
     @IBOutlet weak var menuButton : UIButton!
-    @IBOutlet weak var slider : UISlider!
     @IBOutlet weak var gainLabel : UILabel!
+
+    @IBOutlet weak var gainSlider : UISlider!
     @IBOutlet weak var gainSliderLabel : UILabel!
 
     @IBOutlet weak var samplingSlider : UISlider!
@@ -21,8 +22,15 @@ class WaveDisplayController: UIViewController, WaveManagerDelegate {
 
     var currAmplitudeString : String?
     var currFrequencyString : String?
+//    var currGainString : String?
+    
+    var currGain : Float = 2.0
+    
     var currSamplingRateString : String?
-    var currGainString : String?
+    var sampleSliderMin : Float = 1
+    var sampleSliderMax : Float = 10
+    var currSamplingRate : Float = 0.1
+
     var plot : AKNodeOutputPlot?
     var timer : Timer?
     
@@ -35,6 +43,8 @@ class WaveDisplayController: UIViewController, WaveManagerDelegate {
         self.navigationController?.setNavigationBarHidden(true, animated: false)
         
         gainLabel.font = UIFont.systemFont(ofSize: 20)
+        
+        self.configureSliders()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -76,7 +86,7 @@ class WaveDisplayController: UIViewController, WaveManagerDelegate {
         self.view.bringSubviewToFront(self.menuButton)
         self.view.bringSubviewToFront(self.gainLabel)
         self.view.bringSubviewToFront(self.gainSliderLabel)
-        self.view.bringSubviewToFront(self.slider)
+        self.view.bringSubviewToFront(self.gainSlider)
         self.view.bringSubviewToFront(self.samplingSliderLabel)
         self.view.bringSubviewToFront(self.samplingSlider)
     }
@@ -88,22 +98,56 @@ class WaveDisplayController: UIViewController, WaveManagerDelegate {
         }
     }
     
+    //
+    // MARK: display:
+    //
+    
     func setUpPlot(){
         DispatchQueue.main.async {
             let bounds = self.view.bounds
             if let p = AKNodeOutputPlot(globalMic, frame: bounds) as AKNodeOutputPlot?{
+                p.gain = self.currGain
+                p.plotType = .buffer  //.rolling
+                p.shouldFill = false
+                p.shouldMirror = false
+                p.color = UIColor(displayP3Red: 66/255, green: 110/255, blue: 244/255, alpha: 1.0)
+                p.backgroundColor = .black
                 self.plot = p
-                self.plot!.plotType = .buffer  //.rolling
-                self.plot!.shouldFill = false
-                self.plot!.shouldMirror = false
-                self.plot!.color = UIColor(displayP3Red: 66/255, green: 110/255, blue: 244/255, alpha: 1.0)
-                self.plot!.backgroundColor = .black
                 self.view.addSubview(self.plot!)
             }
         }
     }
     
+    func updateDataLabels(){
+        let value = self.gainSlider.value
+        
+        // gain:
+        let gain = String(format: "%.02f", value)
+        
+        var dataString = "amplitude: \(currAmplitudeString ?? "0")\n"
+        dataString += "frequency: \(currFrequencyString ?? "0")\n"
+        dataString += "gain: \(gain)\n"
+        dataString += "sample rate: \(currSamplingRateString ?? "0")"
+        
+        DispatchQueue.main.async {
+            self.gainLabel.text = dataString
+        }
+    }
     
+    @objc func updateUI() {
+        //        print("updateUI")
+        currFrequencyString = String(format: "%0.02f", globalTracker?.frequency ?? "no")
+        currAmplitudeString = String(format: "%0.02f", globalTracker?.amplitude ?? "no")
+        
+        //        print("freq:\(String(describing: currFrequencyString))")
+        //        print("amp:\(String(describing: currAmplitudeString))")
+        self.updateDataLabels()
+    }
+
+    //
+    // MARK: handlers
+    //
+
     @IBAction func onBack(){
         
         let alertController = UIAlertController(title: "Moog Wave Display", message: nil, preferredStyle: .actionSheet)
@@ -134,6 +178,8 @@ class WaveDisplayController: UIViewController, WaveManagerDelegate {
     }
     
     
+    // gainSlider:
+    
     @IBAction func onSliderValueChanged(sender:UISlider){
         DispatchQueue.main.async {
             self.plot?.gain = sender.value
@@ -141,50 +187,67 @@ class WaveDisplayController: UIViewController, WaveManagerDelegate {
         }
     }
     
+
+    // sampleSlider:
+    
+    func configureSliders(){
+        // the gain slider:
+        self.gainSlider.value = currGain
+
+        // the samplingSlider:
+        self.samplingSlider.minimumValue = sampleSliderMin
+        self.samplingSlider.maximumValue = sampleSliderMax
+        let sliderVal : Float = (self.sampleSliderMax + 1) - (currSamplingRate * 100)
+        self.samplingSlider.value = sliderVal
+        self.updateSamplingSliderVars(sliderValue: self.samplingSlider.value, doResetTimer: true)
+        
+        
+    }
+    
     @IBAction func onSampleSliderValueChanged(sender:UISlider){
-        DispatchQueue.main.async {
-            let v = sender.value
-//            self.plot?.gain = sender.value
-            self.updateDataLabels()
-        }
+        self.updateSamplingSliderVars(sliderValue: sender.value, doResetTimer: false)
+    }
+
+    
+    @IBAction func onSampleTouchUpInside(sender:UISlider){
+        self.updateSamplingSliderVars(sliderValue: sender.value, doResetTimer: true)
     }
     
-    @IBAction func onSampleSliderDragExit(sender:UISlider){
-        DispatchQueue.main.async {
-            let v = sender.value
-            //            self.plot?.gain = sender.value
-            self.updateDataLabels()
-        }
+    @IBAction func onSampleTouchUpOutside(sender:UISlider){
+        self.updateSamplingSliderVars(sliderValue: sender.value, doResetTimer: true)
     }
 
-
-
-    func updateDataLabels(){
-        let value = self.slider.value
-        
-        // gain:
-        let gain = String(format: "%.02f", value)
-        //        gainLabel.text = "Gain: \(gain)"
-        
-        var dataString = "amplitude: \(currAmplitudeString ?? "0")\n"
-        dataString += "frequency: \(currFrequencyString ?? "0")\n"
-        dataString += "gain: \(gain)"
-        
-        DispatchQueue.main.async {
-            self.gainLabel.text = dataString
-        }
+    @IBAction func onSampleTouchDragExit(sender:UISlider){
+        self.updateSamplingSliderVars(sliderValue: sender.value, doResetTimer: true)
     }
     
-    @objc func updateUI() {
-//        print("updateUI")
-        currFrequencyString = String(format: "%0.02f", globalTracker?.frequency ?? "no")
-        currAmplitudeString = String(format: "%0.02f", globalTracker?.amplitude ?? "no")
-        
-//        print("freq:\(String(describing: currFrequencyString))")
-//        print("amp:\(String(describing: currAmplitudeString))")
+    func updateSamplingSliderVars(sliderValue:Float, doResetTimer:Bool){
+        self.currSamplingRate = ((self.sampleSliderMax + 1) - sliderValue)/100
+        currSamplingRateString = String(format: "%0.03f", currSamplingRate )
         self.updateDataLabels()
         
+        if doResetTimer {
+            self.setSamplingRateTimer()
+        }
+
     }
+    
+    func setSamplingRateTimer(){
+        if self.timer != nil {
+            self.timer?.invalidate()
+            self.timer = nil
+        }
+        timer = Timer.scheduledTimer(timeInterval: Double(currSamplingRate),
+                                     target: self,
+                                     selector: #selector(self.updateUI),
+                                     userInfo: nil,
+                                     repeats: true)
+
+    }
+
+
+
+
 
 
     

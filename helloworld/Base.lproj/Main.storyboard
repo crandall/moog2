@@ -104,30 +104,23 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sample Rate" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AZO-EY-ovB">
-                                <rect key="frame" x="5.5" y="923" width="130.5" height="29"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="14.1" translatesAutoresizingMaskIntoConstraints="NO" id="9s6-MR-4Js">
-                                <rect key="frame" x="146" y="922.5" width="304" height="31"/>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="5" minValue="1" maxValue="10" translatesAutoresizingMaskIntoConstraints="NO" id="9s6-MR-4Js">
+                                <rect key="frame" x="18" y="962" width="304" height="31"/>
                                 <connections>
-                                    <action selector="onSampleSliderDragExitWithSender:" destination="UKj-uZ-FeR" eventType="touchDragExit" id="275-Ff-2Ra"/>
                                     <action selector="onSampleSliderValueChangedWithSender:" destination="UKj-uZ-FeR" eventType="valueChanged" id="PpE-7R-euW"/>
+                                    <action selector="onSampleTouchDragExitWithSender:" destination="UKj-uZ-FeR" eventType="touchDragExit" id="pR7-NE-TbA"/>
+                                    <action selector="onSampleTouchUpInsideSender:" destination="UKj-uZ-FeR" eventType="touchUpInside" id="gYK-eb-a0L"/>
+                                    <action selector="onSampleTouchUpOutsideWithSender:" destination="UKj-uZ-FeR" eventType="touchUpOutside" id="kfw-la-j5w"/>
                                 </connections>
                             </slider>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gain:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eHF-f1-Nhc">
-                                <rect key="frame" x="60" y="1033" width="80" height="29"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="80" id="ykJ-GE-P2g"/>
-                                </constraints>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sample Rate" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QBf-nb-T3I">
+                                <rect key="frame" x="328" y="962.5" width="130.5" height="29"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="4" translatesAutoresizingMaskIntoConstraints="NO" id="Var-tg-Oof">
-                                <rect key="frame" x="146" y="1032.5" width="304" height="31"/>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="4" minValue="0.0" maxValue="4" translatesAutoresizingMaskIntoConstraints="NO" id="Var-tg-Oof">
+                                <rect key="frame" x="18" y="1032" width="304" height="31"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="300" id="xhz-U7-Yv8"/>
                                 </constraints>
@@ -135,31 +128,37 @@
                                     <action selector="onSliderValueChangedWithSender:" destination="UKj-uZ-FeR" eventType="valueChanged" id="eqd-tI-F6s"/>
                                 </connections>
                             </slider>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gain" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="he3-CO-Q67">
+                                <rect key="frame" x="328" y="1032.5" width="48" height="29"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="eHF-f1-Nhc" firstAttribute="leading" secondItem="RHO-8H-fRE" secondAttribute="leading" constant="60" id="2t1-0Q-hnj"/>
                             <constraint firstItem="EKZ-ps-Xrz" firstAttribute="top" secondItem="IDY-XH-R6U" secondAttribute="bottom" constant="8" symbolic="YES" id="8Ty-bS-gPy"/>
                             <constraint firstAttribute="trailing" secondItem="qS9-Wr-r7f" secondAttribute="trailing" constant="20" symbolic="YES" id="Dny-OP-GSe"/>
                             <constraint firstItem="qS9-Wr-r7f" firstAttribute="top" secondItem="IDY-XH-R6U" secondAttribute="bottom" constant="8" symbolic="YES" id="GHg-oU-YPO"/>
-                            <constraint firstItem="9s6-MR-4Js" firstAttribute="leading" secondItem="Var-tg-Oof" secondAttribute="leading" id="NYR-GX-q07"/>
-                            <constraint firstItem="EKZ-ps-Xrz" firstAttribute="leading" secondItem="RHO-8H-fRE" secondAttribute="leading" constant="20" symbolic="YES" id="PM3-ok-Gso"/>
-                            <constraint firstItem="9s6-MR-4Js" firstAttribute="leading" secondItem="AZO-EY-ovB" secondAttribute="trailing" constant="12" id="UVQ-XT-ulS"/>
-                            <constraint firstItem="Var-tg-Oof" firstAttribute="centerY" secondItem="eHF-f1-Nhc" secondAttribute="centerY" id="ZmF-T5-VwU"/>
+                            <constraint firstItem="9s6-MR-4Js" firstAttribute="leading" secondItem="Var-tg-Oof" secondAttribute="leading" id="SOd-5f-MqT"/>
+                            <constraint firstItem="he3-CO-Q67" firstAttribute="leading" secondItem="Var-tg-Oof" secondAttribute="trailing" constant="8" symbolic="YES" id="VCO-Aj-qaB"/>
+                            <constraint firstItem="he3-CO-Q67" firstAttribute="centerY" secondItem="Var-tg-Oof" secondAttribute="centerY" id="Vnc-Tf-ZHG"/>
+                            <constraint firstItem="Var-tg-Oof" firstAttribute="leading" secondItem="RHO-8H-fRE" secondAttribute="leading" multiplier="2" constant="20" symbolic="YES" id="WhH-Z0-mtH"/>
+                            <constraint firstItem="QBf-nb-T3I" firstAttribute="centerY" secondItem="9s6-MR-4Js" secondAttribute="centerY" id="YDB-7B-ZXC"/>
+                            <constraint firstItem="4ce-TZ-xnJ" firstAttribute="top" secondItem="Var-tg-Oof" secondAttribute="bottom" constant="50" id="cF6-FT-MKj"/>
                             <constraint firstItem="9s6-MR-4Js" firstAttribute="width" secondItem="Var-tg-Oof" secondAttribute="width" id="iIA-wW-IDf"/>
-                            <constraint firstItem="Var-tg-Oof" firstAttribute="top" secondItem="9s6-MR-4Js" secondAttribute="bottom" constant="80" id="iZd-ru-EUY"/>
-                            <constraint firstItem="4ce-TZ-xnJ" firstAttribute="top" secondItem="eHF-f1-Nhc" secondAttribute="bottom" constant="50" id="owG-V1-A3B"/>
-                            <constraint firstItem="AZO-EY-ovB" firstAttribute="centerY" secondItem="9s6-MR-4Js" secondAttribute="centerY" id="w9l-nn-w2m"/>
-                            <constraint firstItem="Var-tg-Oof" firstAttribute="leading" secondItem="eHF-f1-Nhc" secondAttribute="trailing" constant="8" symbolic="YES" id="yGh-GC-3Gb"/>
+                            <constraint firstItem="Var-tg-Oof" firstAttribute="top" secondItem="9s6-MR-4Js" secondAttribute="bottom" constant="40" id="iZd-ru-EUY"/>
+                            <constraint firstItem="QBf-nb-T3I" firstAttribute="leading" secondItem="9s6-MR-4Js" secondAttribute="trailing" constant="8" symbolic="YES" id="kLW-V3-L1O"/>
+                            <constraint firstItem="EKZ-ps-Xrz" firstAttribute="leading" secondItem="RHO-8H-fRE" secondAttribute="leading" constant="20" symbolic="YES" id="yI7-w3-c9A"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="gainLabel" destination="EKZ-ps-Xrz" id="goS-ME-Ffh"/>
-                        <outlet property="gainSliderLabel" destination="eHF-f1-Nhc" id="Vk9-Bs-w34"/>
+                        <outlet property="gainSlider" destination="Var-tg-Oof" id="NBP-aS-jaf"/>
+                        <outlet property="gainSliderLabel" destination="he3-CO-Q67" id="4JJ-Z3-zhZ"/>
                         <outlet property="menuButton" destination="qS9-Wr-r7f" id="3gA-K9-GKS"/>
                         <outlet property="samplingSlider" destination="9s6-MR-4Js" id="RW0-d7-obX"/>
-                        <outlet property="samplingSliderLabel" destination="AZO-EY-ovB" id="85Q-Ne-UuC"/>
-                        <outlet property="slider" destination="Var-tg-Oof" id="41g-2N-g8x"/>
+                        <outlet property="samplingSliderLabel" destination="QBf-nb-T3I" id="mq0-LD-stA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MZe-OT-at0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
