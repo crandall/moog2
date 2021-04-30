@@ -49,6 +49,14 @@
                                     <action selector="onWave" destination="aTp-qt-Cx2" eventType="touchUpInside" id="uIm-vD-9BC"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8bU-Ez-UYT">
+                                <rect key="frame" x="547" y="654" width="162" height="60"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                <state key="normal" title="Oscillator"/>
+                                <connections>
+                                    <action selector="onOscillator" destination="aTp-qt-Cx2" eventType="touchUpInside" id="flD-iS-1y8"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -58,11 +66,13 @@
                             <constraint firstItem="mU7-aS-cqK" firstAttribute="centerX" secondItem="DQE-W4-pkh" secondAttribute="centerX" id="Nda-FS-Or5"/>
                             <constraint firstItem="mU7-aS-cqK" firstAttribute="width" secondItem="DQE-W4-pkh" secondAttribute="width" id="PHH-t5-ndh"/>
                             <constraint firstItem="DQE-W4-pkh" firstAttribute="bottom" secondItem="1Qf-Qc-y9d" secondAttribute="centerY" constant="-20" id="QGg-kz-02u"/>
+                            <constraint firstItem="8bU-Ez-UYT" firstAttribute="top" secondItem="itj-yo-eMD" secondAttribute="bottom" constant="58" id="Rrd-2J-fyY"/>
                             <constraint firstItem="dEy-fS-7d7" firstAttribute="top" secondItem="f00-X4-twx" secondAttribute="bottom" constant="8" symbolic="YES" id="T7p-ah-qdq"/>
                             <constraint firstItem="mU7-aS-cqK" firstAttribute="height" secondItem="DQE-W4-pkh" secondAttribute="height" id="aSD-pG-6uf"/>
                             <constraint firstItem="itj-yo-eMD" firstAttribute="leading" secondItem="DQE-W4-pkh" secondAttribute="trailing" constant="80" id="br4-R6-2mz"/>
                             <constraint firstItem="DQE-W4-pkh" firstAttribute="centerX" secondItem="1Qf-Qc-y9d" secondAttribute="centerX" constant="-100" id="hpF-HT-2iS"/>
                             <constraint firstItem="mU7-aS-cqK" firstAttribute="top" secondItem="DQE-W4-pkh" secondAttribute="bottom" constant="8" symbolic="YES" id="qvI-s6-ZDv"/>
+                            <constraint firstItem="8bU-Ez-UYT" firstAttribute="leading" secondItem="itj-yo-eMD" secondAttribute="leading" id="zCg-Wq-Rmw"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="2Yy-CT-dTr"/>
@@ -70,6 +80,7 @@
                     <connections>
                         <outlet property="buildLabel" destination="f00-X4-twx" id="nct-Yw-bBE"/>
                         <outlet property="foundationLogoIV" destination="DQE-W4-pkh" id="Nng-Yd-oa1"/>
+                        <outlet property="oscillatorButton" destination="8bU-Ez-UYT" id="IFK-uZ-1lo"/>
                         <outlet property="schoolLogoIV" destination="mU7-aS-cqK" id="EYn-Fd-aWi"/>
                         <outlet property="waveButton" destination="itj-yo-eMD" id="EUv-kY-Xf4"/>
                     </connections>
@@ -104,21 +115,6 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="5" minValue="1" maxValue="10" translatesAutoresizingMaskIntoConstraints="NO" id="9s6-MR-4Js">
-                                <rect key="frame" x="18" y="962" width="304" height="31"/>
-                                <connections>
-                                    <action selector="onSampleSliderValueChangedWithSender:" destination="UKj-uZ-FeR" eventType="valueChanged" id="PpE-7R-euW"/>
-                                    <action selector="onSampleTouchDragExitWithSender:" destination="UKj-uZ-FeR" eventType="touchDragExit" id="pR7-NE-TbA"/>
-                                    <action selector="onSampleTouchUpInsideSender:" destination="UKj-uZ-FeR" eventType="touchUpInside" id="gYK-eb-a0L"/>
-                                    <action selector="onSampleTouchUpOutsideWithSender:" destination="UKj-uZ-FeR" eventType="touchUpOutside" id="kfw-la-j5w"/>
-                                </connections>
-                            </slider>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sample Rate" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QBf-nb-T3I">
-                                <rect key="frame" x="328" y="962.5" width="130.5" height="29"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="4" minValue="0.0" maxValue="4" translatesAutoresizingMaskIntoConstraints="NO" id="Var-tg-Oof">
                                 <rect key="frame" x="18" y="1032" width="304" height="31"/>
                                 <constraints>
@@ -140,15 +136,10 @@
                             <constraint firstItem="EKZ-ps-Xrz" firstAttribute="top" secondItem="IDY-XH-R6U" secondAttribute="bottom" constant="8" symbolic="YES" id="8Ty-bS-gPy"/>
                             <constraint firstAttribute="trailing" secondItem="qS9-Wr-r7f" secondAttribute="trailing" constant="20" symbolic="YES" id="Dny-OP-GSe"/>
                             <constraint firstItem="qS9-Wr-r7f" firstAttribute="top" secondItem="IDY-XH-R6U" secondAttribute="bottom" constant="8" symbolic="YES" id="GHg-oU-YPO"/>
-                            <constraint firstItem="9s6-MR-4Js" firstAttribute="leading" secondItem="Var-tg-Oof" secondAttribute="leading" id="SOd-5f-MqT"/>
                             <constraint firstItem="he3-CO-Q67" firstAttribute="leading" secondItem="Var-tg-Oof" secondAttribute="trailing" constant="8" symbolic="YES" id="VCO-Aj-qaB"/>
                             <constraint firstItem="he3-CO-Q67" firstAttribute="centerY" secondItem="Var-tg-Oof" secondAttribute="centerY" id="Vnc-Tf-ZHG"/>
                             <constraint firstItem="Var-tg-Oof" firstAttribute="leading" secondItem="RHO-8H-fRE" secondAttribute="leading" multiplier="2" constant="20" symbolic="YES" id="WhH-Z0-mtH"/>
-                            <constraint firstItem="QBf-nb-T3I" firstAttribute="centerY" secondItem="9s6-MR-4Js" secondAttribute="centerY" id="YDB-7B-ZXC"/>
                             <constraint firstItem="4ce-TZ-xnJ" firstAttribute="top" secondItem="Var-tg-Oof" secondAttribute="bottom" constant="50" id="cF6-FT-MKj"/>
-                            <constraint firstItem="9s6-MR-4Js" firstAttribute="width" secondItem="Var-tg-Oof" secondAttribute="width" id="iIA-wW-IDf"/>
-                            <constraint firstItem="Var-tg-Oof" firstAttribute="top" secondItem="9s6-MR-4Js" secondAttribute="bottom" constant="40" id="iZd-ru-EUY"/>
-                            <constraint firstItem="QBf-nb-T3I" firstAttribute="leading" secondItem="9s6-MR-4Js" secondAttribute="trailing" constant="8" symbolic="YES" id="kLW-V3-L1O"/>
                             <constraint firstItem="EKZ-ps-Xrz" firstAttribute="leading" secondItem="RHO-8H-fRE" secondAttribute="leading" constant="20" symbolic="YES" id="yI7-w3-c9A"/>
                         </constraints>
                     </view>
@@ -157,13 +148,45 @@
                         <outlet property="gainSlider" destination="Var-tg-Oof" id="NBP-aS-jaf"/>
                         <outlet property="gainSliderLabel" destination="he3-CO-Q67" id="4JJ-Z3-zhZ"/>
                         <outlet property="menuButton" destination="qS9-Wr-r7f" id="3gA-K9-GKS"/>
-                        <outlet property="samplingSlider" destination="9s6-MR-4Js" id="RW0-d7-obX"/>
-                        <outlet property="samplingSliderLabel" destination="QBf-nb-T3I" id="mq0-LD-stA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MZe-OT-at0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="399" y="1697"/>
+        </scene>
+        <!--Oscillator Controller-->
+        <scene sceneID="TP3-xx-Y25">
+            <objects>
+                <viewController storyboardIdentifier="oscillatorController" id="SvB-wU-lde" customClass="OscillatorController" customModule="ThereScope" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="hne-e5-APe"/>
+                        <viewControllerLayoutGuide type="bottom" id="wBH-oo-rpE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="MJQ-Vz-8zs">
+                        <rect key="frame" x="0.0" y="0.0" width="834" height="1112"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ndx-FM-l1v">
+                                <rect key="frame" x="767" y="44" width="36" height="36"/>
+                                <state key="normal" image="hamburger"/>
+                                <connections>
+                                    <action selector="onBack" destination="SvB-wU-lde" eventType="touchUpInside" id="1z2-kD-SdY"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="ndx-FM-l1v" secondAttribute="trailing" constant="31" id="Lmw-mu-cPp"/>
+                            <constraint firstItem="ndx-FM-l1v" firstAttribute="top" secondItem="hne-e5-APe" secondAttribute="bottom" constant="44" id="P87-Mk-qAS"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="menuButton" destination="ndx-FM-l1v" id="1aG-RH-iwQ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tov-eP-sd2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1804" y="-272"/>
         </scene>
         <!--Display Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -214,7 +237,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1809.3525179856117" y="428.9568345323741"/>
+            <point key="canvasLocation" x="1804" y="432"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="VJY-th-qTc">

@@ -11,14 +11,16 @@ import AudioKitUI
 
 class WaveDisplayController: UIViewController, WaveManagerDelegate {
     
+    
+    
     @IBOutlet weak var menuButton : UIButton!
     @IBOutlet weak var gainLabel : UILabel!
 
     @IBOutlet weak var gainSlider : UISlider!
     @IBOutlet weak var gainSliderLabel : UILabel!
 
-    @IBOutlet weak var samplingSlider : UISlider!
-    @IBOutlet weak var samplingSliderLabel : UILabel!
+//    @IBOutlet weak var samplingSlider : UISlider!
+//    @IBOutlet weak var samplingSliderLabel : UILabel!
 
     var currAmplitudeString : String?
     var currFrequencyString : String?
@@ -26,10 +28,10 @@ class WaveDisplayController: UIViewController, WaveManagerDelegate {
     
     var currGain : Float = 2.0
     
-    var currSamplingRateString : String?
-    var sampleSliderMin : Float = 1
-    var sampleSliderMax : Float = 10
-    var currSamplingRate : Float = 0.1
+//    var currSamplingRateString : String?
+//    var sampleSliderMin : Float = 1
+//    var sampleSliderMax : Float = 10
+//    var currSamplingRate : Float = 0.1
 
     var plot : AKNodeOutputPlot?
     var timer : Timer?
@@ -55,7 +57,8 @@ class WaveDisplayController: UIViewController, WaveManagerDelegate {
         print("\(f.debugDescription)")
         
         self.setUpPlot()
-//        WaveManager.sharedInstance.delegate = self
+//        self.handleOsc()
+        WaveManager.sharedInstance.delegate = self
 
         if timer != nil {
             timer!.invalidate()
@@ -67,6 +70,7 @@ class WaveDisplayController: UIViewController, WaveManagerDelegate {
                                      userInfo: nil,
                                      repeats: true)
     }
+    
 
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -87,8 +91,8 @@ class WaveDisplayController: UIViewController, WaveManagerDelegate {
         self.view.bringSubviewToFront(self.gainLabel)
         self.view.bringSubviewToFront(self.gainSliderLabel)
         self.view.bringSubviewToFront(self.gainSlider)
-        self.view.bringSubviewToFront(self.samplingSliderLabel)
-        self.view.bringSubviewToFront(self.samplingSlider)
+//        self.view.bringSubviewToFront(self.samplingSliderLabel)
+//        self.view.bringSubviewToFront(self.samplingSlider)
     }
     
     func shutDownTimer(){
@@ -105,16 +109,56 @@ class WaveDisplayController: UIViewController, WaveManagerDelegate {
     func setUpPlot(){
         DispatchQueue.main.async {
             let bounds = self.view.bounds
+//           if let p = AKNodeOutputPlot(globalMic, frame: bounds, bufferSize: 1024) as AKNodeOutputPlot?{
             if let p = AKNodeOutputPlot(globalMic, frame: bounds) as AKNodeOutputPlot?{
                 p.gain = self.currGain
                 p.plotType = .buffer  //.rolling
+//                p.plotType = .rolling
                 p.shouldFill = false
                 p.shouldMirror = false
                 p.color = UIColor(displayP3Red: 66/255, green: 110/255, blue: 244/255, alpha: 1.0)
                 p.backgroundColor = .black
+                
+
+//                let opt = p.shouldOptimizeForRealtimePlot   //true
+//
+//                let rht = p.rollingHistoryLength()  // 512
+//                p.setRollingHistoryLength(10000)
+//
+//                let ipc = p.initialPointCount() // 100
+////                p.shouldOptimizeForRealtimePlot = true
+//
+//                let shit = p.waveformLayer
+
                 self.plot = p
                 self.view.addSubview(self.plot!)
             }
+
+
+//            let rect = CGRect(x: 0, y: 220, width: 440, height: 200)
+//            let rollingPlot = AKNodeOutputPlot(globalMicCopy2, frame: rect, bufferSize: 1024)
+//
+////            let rollingPlot = AKNodeOutputPlot(globalMicCopy2, frame: CGRect(x: 0, y: 220, width: 440, height: 200))
+//            rollingPlot.plotType = .buffer
+//            rollingPlot.shouldFill = false
+//            rollingPlot.shouldMirror = true
+//            rollingPlot.color = AKColor.red
+//            rollingPlot.gain = 2
+//
+//            let rht = rollingPlot.rollingHistoryLength()  // 512
+////            let bufferSize = rollingPlot.buff
+////            rollingPlot.ez
+////            rollingPlot.setRollingHistoryLength(1024)
+//
+//            let ipc = rollingPlot.initialPointCount() // 100
+////            rollingPlot.initialPointCount()
+//
+////            let sdl = rollingPlot.setSampleData(<#T##data: UnsafeMutablePointer<Float>!##UnsafeMutablePointer<Float>!#>, length: <#T##Int32#>)
+//
+//
+////            addView(rollingPlot)
+//            self.view.addSubview(rollingPlot)
+
         }
     }
     
@@ -127,7 +171,7 @@ class WaveDisplayController: UIViewController, WaveManagerDelegate {
         var dataString = "amplitude: \(currAmplitudeString ?? "0")\n"
         dataString += "frequency: \(currFrequencyString ?? "0")\n"
         dataString += "gain: \(gain)\n"
-        dataString += "sample rate: \(currSamplingRateString ?? "0")"
+//        dataString += "sample rate: \(currSamplingRateString ?? "0")"
         
         DispatchQueue.main.async {
             self.gainLabel.text = dataString
@@ -147,11 +191,19 @@ class WaveDisplayController: UIViewController, WaveManagerDelegate {
     //
     // MARK: handlers
     //
+    
+    func playWav(){
+        WaveManager.sharedInstance.playWavFile()
+    }
 
     @IBAction func onBack(){
         
         let alertController = UIAlertController(title: "Moog Wave Display", message: nil, preferredStyle: .actionSheet)
-        
+
+//        let playAction = UIAlertAction(title: "Play", style: .default, handler: { alertAction in
+//            self.playWav()
+//        })
+
         let exitAction = UIAlertAction(title: "Exit", style: .default, handler: { alertAction in
             self.navigationController?.popViewController(animated: true)
         })
@@ -161,6 +213,7 @@ class WaveDisplayController: UIViewController, WaveManagerDelegate {
         })
         
         
+//        alertController.addAction(playAction)
         alertController.addAction(exitAction)
         alertController.addAction(cancelAction)
         
@@ -194,56 +247,56 @@ class WaveDisplayController: UIViewController, WaveManagerDelegate {
         // the gain slider:
         self.gainSlider.value = currGain
 
-        // the samplingSlider:
-        self.samplingSlider.minimumValue = sampleSliderMin
-        self.samplingSlider.maximumValue = sampleSliderMax
-        let sliderVal : Float = (self.sampleSliderMax + 1) - (currSamplingRate * 100)
-        self.samplingSlider.value = sliderVal
-        self.updateSamplingSliderVars(sliderValue: self.samplingSlider.value, doResetTimer: true)
+//        // the samplingSlider:
+//        self.samplingSlider.minimumValue = sampleSliderMin
+//        self.samplingSlider.maximumValue = sampleSliderMax
+//        let sliderVal : Float = (self.sampleSliderMax + 1) - (currSamplingRate * 100)
+//        self.samplingSlider.value = sliderVal
+//        self.updateSamplingSliderVars(sliderValue: self.samplingSlider.value, doResetTimer: true)
         
         
     }
     
-    @IBAction func onSampleSliderValueChanged(sender:UISlider){
-        self.updateSamplingSliderVars(sliderValue: sender.value, doResetTimer: false)
-    }
-
+//    @IBAction func onSampleSliderValueChanged(sender:UISlider){
+//        self.updateSamplingSliderVars(sliderValue: sender.value, doResetTimer: false)
+//    }
+//
+//
+//    @IBAction func onSampleTouchUpInside(sender:UISlider){
+//        self.updateSamplingSliderVars(sliderValue: sender.value, doResetTimer: true)
+//    }
+//
+//    @IBAction func onSampleTouchUpOutside(sender:UISlider){
+//        self.updateSamplingSliderVars(sliderValue: sender.value, doResetTimer: true)
+//    }
+//
+//    @IBAction func onSampleTouchDragExit(sender:UISlider){
+//        self.updateSamplingSliderVars(sliderValue: sender.value, doResetTimer: true)
+//    }
     
-    @IBAction func onSampleTouchUpInside(sender:UISlider){
-        self.updateSamplingSliderVars(sliderValue: sender.value, doResetTimer: true)
-    }
+//    func updateSamplingSliderVars(sliderValue:Float, doResetTimer:Bool){
+//        self.currSamplingRate = ((self.sampleSliderMax + 1) - sliderValue)/100
+//        currSamplingRateString = String(format: "%0.03f", currSamplingRate )
+//        self.updateDataLabels()
+//
+//        if doResetTimer {
+//            self.setSamplingRateTimer()
+//        }
+//
+//    }
     
-    @IBAction func onSampleTouchUpOutside(sender:UISlider){
-        self.updateSamplingSliderVars(sliderValue: sender.value, doResetTimer: true)
-    }
-
-    @IBAction func onSampleTouchDragExit(sender:UISlider){
-        self.updateSamplingSliderVars(sliderValue: sender.value, doResetTimer: true)
-    }
-    
-    func updateSamplingSliderVars(sliderValue:Float, doResetTimer:Bool){
-        self.currSamplingRate = ((self.sampleSliderMax + 1) - sliderValue)/100
-        currSamplingRateString = String(format: "%0.03f", currSamplingRate )
-        self.updateDataLabels()
-        
-        if doResetTimer {
-            self.setSamplingRateTimer()
-        }
-
-    }
-    
-    func setSamplingRateTimer(){
-        if self.timer != nil {
-            self.timer?.invalidate()
-            self.timer = nil
-        }
-        timer = Timer.scheduledTimer(timeInterval: Double(currSamplingRate),
-                                     target: self,
-                                     selector: #selector(self.updateUI),
-                                     userInfo: nil,
-                                     repeats: true)
-
-    }
+//    func setSamplingRateTimer(){
+//        if self.timer != nil {
+//            self.timer?.invalidate()
+//            self.timer = nil
+//        }
+//        timer = Timer.scheduledTimer(timeInterval: Double(currSamplingRate),
+//                                     target: self,
+//                                     selector: #selector(self.updateUI),
+//                                     userInfo: nil,
+//                                     repeats: true)
+//
+//    }
 
 
 

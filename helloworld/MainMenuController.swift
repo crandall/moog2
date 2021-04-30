@@ -16,7 +16,8 @@ class MainMenuController: UIViewController {
     @IBOutlet weak var titleLabel : UILabel!
     @IBOutlet weak var buildLabel : UILabel!
     @IBOutlet weak var waveButton : UIButton!
-    
+    @IBOutlet weak var oscillatorButton : UIButton!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -42,6 +43,7 @@ class MainMenuController: UIViewController {
         schoolLogoIV.layer.shadowRadius = 10
         
         waveButton.setTitle("ThereScope", for: .normal)
+        oscillatorButton.isHidden = true
         
         if let build = Bundle.main.infoDictionary!["CFBundleVersion"] as! String?{
             buildLabel.text = "build \(build)"
@@ -71,11 +73,17 @@ class MainMenuController: UIViewController {
         //        self.navigationController?.pushViewController(vc, animated: true)
     }
     
-    @IBAction func onMicAnalysis(){
-        let vc = UIStoryboard(name: "Mic", bundle: nil).instantiateViewController(withIdentifier: "micAnalysis")
+//    @IBAction func onMicAnalysis(){
+//        let vc = UIStoryboard(name: "Mic", bundle: nil).instantiateViewController(withIdentifier: "micAnalysis")
+//        self.navigationController?.pushViewController(vc, animated: true)
+//        
+//    }
+    
+    @IBAction func onOscillator(){
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "oscillatorController")
         self.navigationController?.pushViewController(vc, animated: true)
-        
     }
+
     
     
 }
